@@ -5,11 +5,13 @@ White Shark CNN labeling script
 Last updated: 10/17/2019
 Author: Chris Rillahan
 
-Dependent packages
+Dependent packages:
+    
 OpenCV version 3.4.2
 FastAI version 1.0.57
 iptcinfo3
 tqdm 
+
 """
 
 #Import packages
