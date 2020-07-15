@@ -12,6 +12,9 @@ Created on Thu Jan  9 15:46:28 2020
 
 @author: Deep Thought
 """
+import os
+
+os.chdir('C:\\Users\\Deep Thought\\Desktop\\White Shark CNN\\Multi-Label CNN Model\\')
                 
 import WS_Utils as Util
 
@@ -19,37 +22,52 @@ import WS_Utils as Util
 #Subset a series of images simply labeled 'No Shark'.  The total data set is 
 #currently 533,956 images.
 
-#Proportion of 'No Shark' images .  This should yield ~16,000 images.
+print('Starting to sub-sample No Shark images')
+
+#Proportion of 'No Shark' images .  This should yield ~43,000 images.
 NS_Prop = 0.05
 
 #Image path
 path = "D:\\Population Study Videos\\Training Data\\Training Images\\No shark\\"
 
 #subset path
-output_path = "D:\\Population Study Videos\\Training Data\\CNN_training_set\\"
+output_path = "E:\\CNN_training_set_2017\\"
 
 Util.ImageSubSample(path, output_path, NS_Prop)
 
 
 '''Shark subset image set'''
 #Subset a series of images simply labeled 'Shark'.  The total data set is 
-#currently 109,674 images.
+#currently 60,165 images.
 
-#Proportion of 'Shark' images.  This should yield ~11,000 images 
-NS = 0.1
+print('Starting to sub-sample Shark images')
+
+#Proportion of 'Shark' images.  This should yield ~9,000 images 
+S_Prop = 0.15
 
 #Image path
-path = "D:\\Population Study Videos\\Training Data\\Training Images\\Shark\\"
+path = "D:\\Population Study Videos\\Training Data\\Training Images\\Shark_Clean\\"
 
-Util.ImageSubSample(path, output_path, NS)
+#subset path
+output_path = "E:\\Shark\\"
+
+Util.ImageSubSample(path, output_path, S_Prop)
+
+#random_file=random.choice(os.listdir("Folder_Destination"))
 
 
 '''Collate the labeled Shark image set'''
 #Shark images with detailed labels are currently in multiple directories and
-#sub-directories.  This function moves them all into the training folder.
+#sub-directories.  This function moves them all into the training folder (~30,500).
+
+print('Collating labeled shark images')
 
 #Image path
 path = "D:\\Population Study Videos\\Training Data\\Training Images\\ID Catalog\\"
+
+#subset path
+output_path = "E:\\Shark_2\\"
+
 
 Util.ImageAgg(path, output_path)
 
@@ -57,8 +75,10 @@ Util.ImageAgg(path, output_path)
 '''Meta-data labeling'''
 #The FastAI multi-label CNN requires a csv listing the filename and labels. 
 
+print('Creating a metadata files')
+
 #Image path
-path = "D:\\Population Study Videos\\Training Data\\CNN_training_set\\"
+path = "E:\\CNN_training_set_2017\\"
 
 metaFileName = 'ws_metadata.csv'
 

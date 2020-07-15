@@ -26,6 +26,61 @@ def ImageSubSample(inputPath, outputPath, SampleProp):
                 if random.random() < SampleProp:             
                     copyfile(root +'\\' + f, outputPath + f)
                     
+def CleanSharkFolder(inputPath, outputPath, kw_filter):
+    #This function creates a image subset of images from a image set.
+    #The size of the subset is derived from the SampleProp variable which 
+    #takes a proportion of the total image set.
+    
+        #Filewalker function to iterate through the image set
+        for root, dirs, filenames in os.walk(inputPath):
+            for f in filenames:
+                if f[-4:] == '.jpg': #check to see if the file extension is correct
+                        #Open the file with IPTC
+                        info = IPTCInfo(root + '\\' +f)
+                        #print(info)
+                        meta = info['keywords'] #Extracts metadata
+                        meta_list = [] #Create a formatted list of image tags
+                        
+                        #iterate through the image tags to create a metadata tag string
+                        for i in range(len(meta)):
+                            meta_list.append(meta[i].decode('ascii'))
+                                
+                        #There were some 'Shark' images with no meta-data.
+                        if 'Shark' not in meta_list:
+                            if 'No_shark' not in meta_list:
+                                meta_list = meta_list.append('Shark')
+                                
+                        if 'Shark' in meta_list:
+                            if set(meta_list).isdisjoint(kw_filter) == True:
+                                copyfile(root +'\\' + f, outputPath + f)
+                                
+                if f[-5:] == '.jpeg': #check to see if the file extension is correct
+                        #Open the file with IPTC
+                        info = IPTCInfo(root + '\\' +f)
+                        #print(info)
+                        meta = info['keywords'] #Extracts metadata
+                        meta_list = [] #Create a formatted list of image tags
+                        
+                        #iterate through the image tags to create a metadata tag string
+                        for i in range(len(meta)):
+                            meta_list.append(meta[i].decode('ascii'))
+                                
+                        #There were some 'Shark' images with no meta-data.
+                        if 'Shark' not in meta_list:
+                            if 'No_shark' not in meta_list:
+                                meta_list = meta_list.append('Shark')
+                                
+                        if 'Shark' in meta_list:
+                            if set(meta_list).isdisjoint(kw_filter) == True:
+                                copyfile(root +'\\' + f, outputPath + f)
+
+##Clean the shark only images to only keep images with only the shark label
+#inputPath = "D:\\Population Study Videos\\Training Data\\Training Images\\Shark\\"
+#outputPath = "D:\\Population Study Videos\\Training Data\\Training Images\\Shark_Clean\\"
+#kw_filter = ['Gill', 'Pelvic', 'Caudal', 'Dorsal']
+#CleanSharkFolder(inputPath, outputPath, kw_filter)
+
+                    
 def ImageAgg(inputPath, outputPath):
     #This function collates and copies images from directory into a single folder.
     
